@@ -1,0 +1,39 @@
+
+// preset form values if we receive a userdata object //
+- user = typeof(udata) != 'undefined' ? udata : { }
+// store the userId on the client side in a hidden input field //
+input(type='hidden', value= user._id)#userId
+
+#account-form-container.center-vertical 
+	form.card.card-body.bg-light(method='post')#account-form
+		h2
+		h6#sub Por favor responde nuestra encuenta
+		hr
+		.form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm ¿ Que te gustaria que agregaramos al informe ? 
+			.col-sm-9
+				input.form-control#name-tf(type='text', name='primera_pregunta', value= user.name)
+
+		.form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm ¿La información es correcta ?
+			.col-sm-9
+					select.custom-select#segunda-pregunta(name='segunda_pregunta')
+						option(selected=false)= "SI"
+						option(selected=false)= "NO"
+		.form-group.row.margin-zero
+			label.col-sm-3.col-form-label.col-form-label-sm ¿Del 1 al 5 es rapido el sitio ?
+			.col-sm-9
+				select.custom-select#tercera-pregunta(name='tercera_pregunta')
+						option(selected=false)= "1"
+						option(selected=false)= "2"
+						option(selected=false)= "3"
+						option(selected=false)= "4"
+						option(selected=false)= "5"
+		hr
+		.form-buttons
+			button(type='button')#account-form-btn1.btn.btn-outline-dark
+			button(type='submit')#account-form-btn2.btn.btn-primary
+
+// display form errors in a custom modal window //
+
+include modals/form-errors
