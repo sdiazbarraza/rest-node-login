@@ -4,50 +4,67 @@
 
 ### A basic account management system built in Node.js with the following features:
 
-* New User Account Creation
-* Secure Password Reset via Email
-* Ability to Update / Delete Account
-* Session Tracking for Logged-In Users
-* Local Cookie Storage for Returning Users
-* Blowfish-based Scheme Password Encryption
-
-## Live Demo
-
-[https://nodejs-login.herokuapp.com](https://nodejs-login.herokuapp.com)
-
-For testing purposes you can view a [database dump of all accounts here](https://nodejs-login.herokuapp.com/print).<br>Note: This database automatically resets every 24 hours.
-
+* Create question 
+* Login  
+## Pre-requesites
+* Mysql database 
 ## Installation & Setup
-1. Install [Node.js](https://nodejs.org/) & [MongoDB](https://www.mongodb.org/) if you haven't already.
-2. Clone this repository and install its dependencies.
+1. Clone this repository and install its dependencies.
 		
 		> git clone git://github.com/braitsch/node-login.git node-login
-		> cd node-login
+		> cd test_auto
 		> npm install
+2. From within the node-login directory start the server.
+
+		> CREATE TABLE `quiz_admin`.`user` (
+			`id_user` INT NOT NULL AUTO_INCREMENT,
+			`username` VARCHAR(45) NULL DEFAULT NULL,
+			`password` VARCHAR(45) NULL DEFAULT NULL,
+			`role` VARCHAR(45) NULL DEFAULT NULL,
+			PRIMARY KEY (`id_user`));
+
+			INSERT INTO `quiz_admin`.`user`
+			(
+			`username`,
+			`password`,
+			`role`)
+			VALUES
+			(
+			"usuario_admin",
+			"1234",
+			"admin");
+			INSERT INTO `quiz_admin`.`user`
+			(
+			`username`,
+			`password`,
+			`role`)
+			VALUES
+			(
+			""usuario_user",
+			"1234",
+			"usuario");
+
+			CREATE TABLE `quiz_admin`.`user_session` (
+			`session_id` INT NOT NULL AUTO_INCREMENT,
+			`expires` DATETIME NULL,
+			`data` VARCHAR(255) NULL,
+			PRIMARY KEY (`session_id`));
+
+
+			CREATE TABLE `quiz_admin`.`question` (
+			`id_question` INT NOT NULL AUTO_INCREMENT,
+			`id_user` INT NULL,
+			`respuesta_1` VARCHAR(45) NULL,
+			`respuesta_2` VARCHAR(45) NULL,
+			`respuesta_3` VARCHAR(45) NULL,
+			PRIMARY KEY (`id_question`));
+
+			ALTER TABLE question
+			ADD CONSTRAINT FK_question
+			FOREIGN KEY (id_user) REFERENCES user(id_user);
 	
-3. In a separate shell start MongoDB.
-
-		> mongod
-
-4. From within the node-login directory start the server.
-
-		> node app
-	
-5. Open a browser window and navigate to: [http://localhost:3000](http://localhost:3000)
-
-## Password Retrieval
-
-To enable the password retrieval feature it is recommended that you create environment variables for your credentials instead of hard coding them into the [email dispatcher module](https://github.com/braitsch/node-login/blob/master/app/server/modules/email-dispatcher.js).
-
-To do this on OSX you can simply add them to your .profile or .bashrc file.
-
-	export NL_EMAIL_HOST='smtp.gmail.com'
-	export NL_EMAIL_USER='your.email@gmail.com'
-	export NL_EMAIL_PASS='1234'
-
-[![node-login](./readme.img/retrieve-password.jpg?raw=true)](https://nodejs-login.herokuapp.com)
-
-
-## Contributing
-
-Questions and suggestions for improvement are welcome.
+3. Open a browser window and navigate to: [http://localhost:3000](http://localhost:3000)
+## Source
+	* Node.js Login Boilerplate
+	* More Info : https://github.com/braitsch/node-login
+	* Copyright (c) 2013-2020 Stephen Braitsch
